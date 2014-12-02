@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<title>Secret Santa @ Lithium</title>
+<style>
+.left {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+.right {
+        -moz-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+
+</style>
+<script src="js/angular.js" ></script>
+<script src="js/restangular.js"></script>
+<body>
+<div id="animatedImage" style="position:fixed;padding-top:550px;z-index:99;left:1px;bottom:1px;">
+ <img id="img1" src="http://www.fatihtoprak.com/wp-content/themes/PozWhite/assets/img/Poz_Santa.gif" alt="animatedImage" />
+</div>
+<script>
+var distanceBall=0; 
+var directionBall=1; 
+document.getElementById('animatedImage').style.top = 10;
+document.getElementById('animatedImage').style.left = 10;
+var timerToggle=null; 
+animateBall();
+var setting = 0;          
+
+  function animateBall() {   
+  document.getElementById("animatedImage").style.left=distanceBall + "px";
+  
+  distanceBall+=directionBall;
+
+  if (distanceBall>window.screen.width -70) { 
+  document.getElementById('animatedImage').style.top = 10;
+  document.getElementById('animatedImage').style.left = 10;
+  directionBall = -1;
+  document.getElementById('img1').className = 'left';
+  }
+
+  if (distanceBall<0) {
+  directionBall = 1;
+  document.getElementById('img1').className = 'right';
+  }
+
+  timerToggle=setTimeout(function() { animateBall(); }, 0.1);
+  }
+</script>
+</body>
+</html>
