@@ -40,3 +40,8 @@ body {
     }
 }
 
+#draw-img {
+	-webkit-border-radius: 130px;
+    -moz-border-radius: 130px;
+    border-radius: 130px;
+}
