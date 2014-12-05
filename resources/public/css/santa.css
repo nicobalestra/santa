@@ -45,3 +45,17 @@ body {
     -moz-border-radius: 130px;
     border-radius: 130px;
 }
+
+
+h2 {
+    font-size: 50px;
+    line-height: 20px;
+    font-family: 'JungleFeverRegular', Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: rgba(20, 20, 20, .2) 2px 2px 2px;
+    color: red;
+     
+    /*text stroke*/
+    -webkit-text-stroke: 1px #fff473;
+}

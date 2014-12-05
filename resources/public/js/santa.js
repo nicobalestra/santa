@@ -3,7 +3,8 @@ var santa = angular.module("santa", ["restangular", "ngRoute"]);
 santa.factory("User", function() {
 	return {
 		logged: false,
-		setLogin : function(){this.logged = true}
+		id: ""
+	
 	}
 });
 
@@ -30,13 +31,31 @@ santa.controller("Login", ["$scope", "Restangular", "$location", "User", functio
  		Restangular.all("login").post({username: $scope.email}).then(function(data){
  			if (data.success){
  				$location.path("/draw");
- 				User.setLogin();
- 				console.log("user.logged is " + User.logged)
+ 				User.logged = true;
+ 				User.id = data.id;
+ 				console.log("user is " + User);
  			}});
  	};
 
 }]);
 
-santa.controller("Draw", ["$scope", function($scope){
+santa.controller("Draw", ["$scope", "User", "Restangular", function($scope, User, Restangular){
+	$scope.isDrawError = false;
+	$scope.drawError = "";
 
+	$scope.draw = function(){
+		console.log("The user ID is " + User.id);
+		Restangular.one("draw", User.id)
+		.get()
+		.then(function(resp){
+			console.log("Returning from draw REST call");
+			console.log(resp);
+		},
+		function(data){
+			console.log("Error");
+			console.log(data);
+			$scope.drawError = data.statusText;
+			$scope.isDrawError = true;
+		});
+	};
 }]);
