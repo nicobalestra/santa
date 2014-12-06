@@ -1,1 +1,11 @@
-<h2>Here's your Santa match</h2>   
+<div class="match-container">
+	<h2>Here's your Santa match</h2>   
+	<a href="http://community.lithium.com/t5/user/viewprofilepage/user-id/{{match.litho.userId}}">
+		<img ng-src="http://community.lithium.com{{match.litho['url-icon']}}">
+	</a>
+	<h1>{{match.name}} ({{match.email}})</h1>
+	<div ng-if="match.preference1 || match.preference2 || match.preference3">
+		<p>{{match.name}} likes {{match.preference1}}&nbsp;{{match.preference2}}&nbsp;{{match.preference3}}</p>
+	</div>
+
+<div>

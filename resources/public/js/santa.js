@@ -1,9 +1,10 @@
-var santa = angular.module("santa", ["restangular", "ngRoute"]);
+var santa = angular.module("santa", ["restangular", "ngRoute", "ngSanitize"]);
 
 santa.factory("User", function() {
 	return {
 		logged: false,
-		id: ""
+		id: "",
+		match: {}
 	
 	}
 });
@@ -19,6 +20,11 @@ santa.config(['$routeProvider', function($routeProvider){
 				templateUrl: "/draw.html",
 				controller: "Draw"
 			})
+		.when("/match",
+			{
+				templateUrl : "/match.html",
+				controller: "Match"
+			})
 		.otherwise({
 			redirectTo: "/"
 		});
@@ -27,21 +33,26 @@ santa.config(['$routeProvider', function($routeProvider){
 
 santa.controller("Login", ["$scope", "Restangular", "$location", "User", function($scope, Restangular, $location, User){
 	$scope.email = "";
+	$scope.loginFailed = false;
+
  	$scope.login = function(){
  		Restangular.all("login").post({username: $scope.email}).then(function(data){
  			if (data.success){
  				$location.path("/draw");
  				User.logged = true;
  				User.id = data.id;
- 				console.log("user is " + User);
+ 			}
+ 			else{
+ 				$scope.loginFailed = true;
  			}});
  	};
 
 }]);
 
-santa.controller("Draw", ["$scope", "User", "Restangular", function($scope, User, Restangular){
+santa.controller("Draw", ["$scope", "User", "Restangular", "$location", function($scope, User, Restangular, $location){
 	$scope.isDrawError = false;
 	$scope.drawError = "";
+	$scope.noMatchFound = false;
 
 	$scope.draw = function(){
 		console.log("The user ID is " + User.id);
@@ -49,7 +60,12 @@ santa.controller("Draw", ["$scope", "User", "Restangular", function($scope, User
 		.get()
 		.then(function(resp){
 			console.log("Returning from draw REST call");
-			console.log(resp);
+			if (resp.match && resp.match != ""){
+				$scope.drawMatch(resp.match);
+			} else
+			{
+				$scope.noMatchFound = true;
+			}
 		},
 		function(data){
 			console.log("Error");
@@ -58,4 +74,25 @@ santa.controller("Draw", ["$scope", "User", "Restangular", function($scope, User
 			$scope.isDrawError = true;
 		});
 	};
+
+	$scope.drawMatch = function(email){
+		Restangular.one("colleague", email)
+		.get()
+		.then(function(data){
+			console.log("Setting match record: " + data.colleague);
+			User.match = data.colleague;
+			$location.path("/match");
+
+		})
+	}
+}]);
+
+santa.controller("Match", ["$scope", "User", '$sce', "$location", function($scope, User, $sce, $location) {
+
+	if (!User.match || !User.match.litho){
+		$location.path("/");
+	}
+
+	$scope.match = User.match;
+
 }]);

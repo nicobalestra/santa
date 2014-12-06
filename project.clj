@@ -6,7 +6,9 @@
                  [compojure "1.2.0"]
                  [ring/ring-defaults "0.1.2"]
                  [com.novemberain/monger "2.0.0"]
-                 [ring/ring-json "0.3.1"]]
+                 [ring/ring-json "0.3.1"]
+                 [clj-http "1.0.1"]]
+                 
   :plugins [[lein-ring "0.8.13"]]
   :ring {:handler santa.core.handler/app}
   :profiles

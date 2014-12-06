@@ -22,6 +22,8 @@
 </style>
 <script src="js/angular.js" ></script>
 <script src="js/angular-route.js"></script>
+<script src="js/angular-sanitize.js"></script>
+
 <script src="js/underscore-min.js"></script>
 <script src="js/restangular.js"></script>
 <script src="js/santa.js"></script>
@@ -38,27 +40,49 @@ var directionBall=1;
 document.getElementById('animatedImage').style.top = 10;
 document.getElementById('animatedImage').style.left = 10;
 var timerToggle=null; 
-animateBall();
+animateSanta();
 var setting = 0;          
 
   function animateBall() {   
-  document.getElementById("animatedImage").style.left=distanceBall + "px";
+    document.getElementById("animatedImage").style.left=distanceBall + "px";
   
-  distanceBall+=directionBall;
+    distanceBall+=directionBall;
 
-  if (distanceBall>window.screen.width -70) { 
-  document.getElementById('animatedImage').style.top = 10;
-  document.getElementById('animatedImage').style.left = 10;
-  directionBall = -1;
-  document.getElementById('img1').className = 'left';
+    if (distanceBall>window.screen.width -70) { 
+      document.getElementById('animatedImage').style.top = 10;
+      document.getElementById('animatedImage').style.left = 10;
+      directionBall = -1;
+      document.getElementById('img1').className = 'left';
+    }
+
+    if (distanceBall<0) {
+      directionBall = 1;
+      document.getElementById('img1').className = 'right';
+    }
+
+    timerToggle=setTimeout(function() { animateBall(); }, 0.1);
   }
 
-  if (distanceBall<0) {
-  directionBall = 1;
-  document.getElementById('img1').className = 'right';
-  }
+  function animateSanta(){
+    document.getElementById("animatedImage").style.left=distanceBall + "px";
+  
+    distanceBall+=directionBall;
 
-  timerToggle=setTimeout(function() { animateBall(); }, 0.1);
+    if (distanceBall > window.screen.width -70) { 
+      console.log("What's going on? " + distanceBall + " " + window.screen.width);  
+      document.getElementById('animatedImage').style.top = 10;
+      document.getElementById('animatedImage').style.left = 0;
+      //directionBall = 1;
+      document.getElementById('img1').className = 'right';
+    }
+
+    if (distanceBall<0) {
+      alert("What?");
+      directionBall = 1;
+      document.getElementById('img1').className = 'right';
+    }
+
+    timerToggle=setTimeout(function() { animateSanta(); }, 0.1); 
   }
 </script>
 <div ng-view></div>

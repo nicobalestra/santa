@@ -1,3 +1,3 @@
-email, preference1, preference2, preference3
-nicobalestra@gmail.com, "I love everything, I love also.. i don't know, everything", I like gadgets
-paolotagliaferri@gmail.com, videogames, speghetti, lasagna
+email, name, login, preference1, preference2, preference3
+nicobalestra@gmail.com, Nico, NicoB, "I love everything, I love also.. i don't know, everything", I like gadgets, I like clojure
+paolotagliaferri@gmail.com, Paolo, PaoloT, videogames, speghetti, lasagna
