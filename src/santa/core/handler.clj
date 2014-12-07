@@ -1,4 +1,5 @@
 (ns santa.core.handler
+  (:refer-clojure :exclude [select find sort])
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.util.response :as resp]
@@ -7,6 +8,7 @@
             [monger.core :as mg]
             [monger.collection :as mc]
             [monger.operators :refer :all]
+            [monger.query :refer :all]
             [clj-http.client :as client]
             [cheshire.core :refer :all]
             [clojure.string :refer [lower-case]]
@@ -35,10 +37,17 @@ If we find one, we pick the first one and we'll assign it to the drawer. We then
 Lithium avatar to put on the page (this should never fail or at least should never block the operation)."
   [drawer]
   (println "Find a match for " drawer)
-  (let [db (get-db)
-          match (mc/find-one-as-map db coll {$and [{:picked-by {$exists false}}
-                                                   {:email {$ne (str (:email drawer))}}]})]
-          (println "Match found: " match)
+  (let [db 	  (get-db)
+        match (with-collection db coll
+          		(find {$and [{:picked-by {$exists false}}
+                      		 {:email {$ne (str (:email drawer))}}]})
+          		(sort (array-map :ID 1))
+          		(limit 10)) 
+         ;match (mc/find-one-as-map db coll {$and [{:picked-by {$exists false}}
+                         						  ;{:email {$ne (str (:email drawer))}}]} )
+  		match (rand-nth match)
+  		]
+          (println "Match for user " (:email drawer) " is " match)
           (if match
           	(do
           		(mc/update-by-id db coll (:_id drawer) {$set {:match (:email match)}})
@@ -47,30 +56,41 @@ Lithium avatar to put on the page (this should never fail or at least should nev
           	{:match ""}
           )))
 
-(defn- extract-litho 
+(defn- extract-litho-data 
 "Filter only the data we really need out of the data queried from Lithium"
 	[user]
 	(let [profiles (get-in user [:response :user :profiles :profile])
 		  get-profile (fn [name]
 		  				(:$ (first (filter #(= (:name %) name)  profiles))))
 		  signature (get-profile "signature")
-		  icon (get-profile "url_icon")
 		  userId (get-in user [:response :user :id :$])]
 	{:signature signature
-	 :url-icon icon
 	 :userId userId}
 	))
 
-(defn- fill-litho 
+(defn- add-avatar [user avatar]
+	(println "Adding avatar information to user " user)
+	(println "Avatar " avatar)
+	(let [url (get-in avatar [:response :image :url :$])]
+		(assoc user :url-icon url))
+	)
+
+(defn- fill-litho-data 
 "Query the Lithium community to retrieve data about the user and store'em on the database"
 	[person]
 	(if-not (:litho person)
 		(let [rest (str "https://community.lithium.com/restapi/vc/users/login/" 
-						(:login person) 
+						(:loginName person) 
 						"?restapi.response_format=json")
+			  rest-avatar (str "https://community.lithium.com/restapi/vc/users/login/" 
+							   (:loginName person) 
+							   "/profiles/avatar?restapi.response_format=json")
 			  resp (client/get rest)
 			  user (parse-string (:body resp) true)
-			  user (extract-litho user)
+			  user (extract-litho-data user)
+			  resp (client/get rest-avatar)
+			  avatar (parse-string (:body resp) true)
+			  user (add-avatar user avatar)
 			  db   (get-db)]
 			
 			(println "Resp from litho: " user)
@@ -81,7 +101,7 @@ Lithium avatar to put on the page (this should never fail or at least should nev
 (defn- get-person-by-email [email]
 	(let [db (get-db)
 		  person (mc/find-one-as-map db coll {:email email})
-		  person (fill-litho person)]
+		  person (fill-litho-data person)]
 		  (println "Call to get-person-by-email returns " person)
 		  (resp/response {:colleague (dissoc person :_id)})))
 

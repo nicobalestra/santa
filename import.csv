@@ -1,3 +1,17 @@
-email, name, login, preference1, preference2, preference3
-nicobalestra@gmail.com, Nico, NicoB, "I love everything, I love also.. i don't know, everything", I like gadgets, I like clojure
-paolotagliaferri@gmail.com, Paolo, PaoloT, videogames, speghetti, lasagna
+ID,loginName,name,email,preferences
+7435,NicoB,Nico,nico.balestra@lithium.com,"Gadgets, World affair and politics, Computer Programming (of course :) )"
+5041,CharlotteK,Charlotte,charlotte.kubler@lithium.com,"videogames, comic books, candles, gadgets, things that smell nice :)"
+12104,OlivierS,olivier,olivier.salmon@lithium.com,"wine, chocolate, gardening, cooking, gadgets"
+17571,FabriceE,Fab,fabrice.etienne@lithium.com, Everything
+9549,OliviaL,Olivia Landolt,olivia.landolt@lithium.com ,"Mac makeup, dogs, BASS (the music, not the instrument)"
+19717,MunafD,Dalvers,munaf.dalvi@lithium.com,I like Nando's
+19450,PeteC,Pete Closs,pete.closs@lithium.com,"Anything video game related, or sugar/wheat-free Christmas snacks I guess!"
+9839,PaoloT,Paolo,paolo.tagliaferri@lithium.com,Open to interpretation :-)
+7537,LiamW,Liam Williamson,liam.williamson@lithium.com,"Video Games, Drumming, Dark Rum"
+15083,NeelD,Neel,neel.davda@lithium.com,"Provincial delicacies, interesting booze, Amazon vouchers, football, music"
+15857,AmayaW,Amaya,amaya.wilhelm@lithium.com,"hot sauce, beer, kitchen stuff (mixing spoons, can opener, garlic press, etc), something funny to put on my desk??"
+3739,VictoriaA,Victoria Adamov,victoria.adamov@lithium.com,everything :)
+17009,RobS,Rob,rob.steel@lithium.com, Everything
+5441,LisaB,Lisa Bidder,lisa.bidder@lithium.com,"no alcohol, I like anything from chilli to minions"
+8891,CharlesN,Charles,charles.njoku@lithium.com,"Popcorn, Capoeira"
+2356,DerekJ,Derek Jackson,derek.jackson@lithium.com,Anything really. From op shop to high street I like it.

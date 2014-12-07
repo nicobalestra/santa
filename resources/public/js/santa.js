@@ -36,15 +36,23 @@ santa.controller("Login", ["$scope", "Restangular", "$location", "User", functio
 	$scope.loginFailed = false;
 
  	$scope.login = function(){
- 		Restangular.all("login").post({username: $scope.email}).then(function(data){
- 			if (data.success){
- 				$location.path("/draw");
- 				User.logged = true;
- 				User.id = data.id;
- 			}
- 			else{
- 				$scope.loginFailed = true;
- 			}});
+ 		Restangular.all("login")
+ 					.post({username: $scope.email})
+ 					.then(
+ 						function(data){
+ 							if (data.success){
+ 								$location.path("/draw");
+ 								User.logged = true;
+ 								User.id = data.id;
+ 							}
+ 							else{
+ 								$scope.loginFailed = true;
+ 							}},
+ 						function(data){
+ 							console.log(data);
+ 							$scope.httpError = true;
+
+ 						});
  	};
 
 }]);
