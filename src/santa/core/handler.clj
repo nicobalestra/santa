@@ -132,7 +132,7 @@ Lithium avatar to put on the page (this should never fail or at least should nev
 		{:success false :message "Maximum attempt of retrieving your code reached."}
 		(do 
 		  (let [db (get-db)]
-			(mail/send-message {:from "secret.santa@lithium.com"
+			(mail/send-message {:from "Secret Santa Picker <mailer@lithium.com>"
 	                       :to [(:email user)]
 	                       :subject "Your secret santa picker code"
 	                       :body [
