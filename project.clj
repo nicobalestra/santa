@@ -10,10 +10,15 @@
                  [clj-http "1.0.1"]
                  [cheshire "5.3.1"]
                  [com.draines/postal "1.11.3"]
+                 [environ "0.5.0"]
                  ]
 
-  :plugins [[lein-ring "0.8.13"]]
+  :plugins [[lein-ring "0.8.13"]
+            [environ/environ.lein "0.2.1"]]
   :ring {:handler santa.core.handler/app}
+  :uberjar-name "santa.jar"
+  :hooks [environ.leiningen.hooks]
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring-mock "0.1.5"]]}})
+                        [ring-mock "0.1.5"]]}
+   :production {:env {:production true}}})
