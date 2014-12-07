@@ -5,6 +5,7 @@
             [ring.util.response :as resp]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response wrap-json-params]]
+            [ring.adapter.jetty :as jetty]
             [monger.core :as mg]
             [monger.collection :as mc]
             [monger.operators :refer :all]
@@ -13,6 +14,7 @@
             [cheshire.core :refer :all]
             [clojure.string :refer [lower-case]]
             [postal.core :as mail]
+            [environ.core :refer [env]]
             )
   (:import org.bson.types.ObjectId))
 
@@ -176,3 +178,8 @@ Lithium avatar to put on the page (this should never fail or at least should nev
       (wrap-json-params)
       (wrap-json-response)
   ))
+
+(defn -main [& [port]]
+  (let [port (Integer. (or port (env :port) 5000))]
+    (jetty/run-jetty #'app {:port port :join? false})))
+
