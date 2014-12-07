@@ -34,10 +34,38 @@ santa.config(['$routeProvider', function($routeProvider){
 santa.controller("Login", ["$scope", "Restangular", "$location", "User", function($scope, Restangular, $location, User){
 	$scope.email = "";
 	$scope.loginFailed = false;
+	$scope.password = "";
+	$scope.codeSendingError = false;
+	$scope.loginErrorMessage = ""
+	$scope.loginNotFound = false;
+	$scope.codeSent = false;
+
+	function clearErrors(){
+		$scope.loginFailed = false;
+		$scope.codeSendingError = false;
+		$scope.loginNotFound = false;
+		$scope.codeSent = false;
+	}
 
  	$scope.login = function(){
+ 		clearErrors();
+
+ 		if (!$scope.email || $scope.email == "")
+ 		{
+ 			$scope.loginFailed = true;
+ 			$scope.loginErrorMessage = "Please enter an email address";
+ 			return;
+ 		}
+
+ 		if (!$scope.password || $scope.password == ""){
+ 			$scope.loginFailed = true;
+ 			$scope.loginErrorMessage = "Please enter the password I've sent you via email when you pressed on the 'Send me the password button'";
+ 			return;
+
+ 		}
+
  		Restangular.all("login")
- 					.post({username: $scope.email})
+ 					.post({username: $scope.email, password: $scope.password})
  					.then(
  						function(data){
  							if (data.success){
@@ -46,7 +74,7 @@ santa.controller("Login", ["$scope", "Restangular", "$location", "User", functio
  								User.id = data.id;
  							}
  							else{
- 								$scope.loginFailed = true;
+ 								$scope.loginNotFound = true;
  							}},
  						function(data){
  							console.log(data);
@@ -54,6 +82,29 @@ santa.controller("Login", ["$scope", "Restangular", "$location", "User", functio
 
  						});
  	};
+
+ 	$scope.sendCode = function(){
+ 		clearErrors();
+
+ 		if (!$scope.email || $scope.email == ""){
+ 			$scope.codeSendingError = true;
+ 			$scope.codeErrorMessage = "Please enter an email address";
+ 			return;
+ 		}
+
+ 		Restangular.all("getcode")
+ 				   .post({username: $scope.email})
+ 				   .then(
+ 				   		function(data){
+ 				   			console.log(data);
+ 				   			if (!data.success){
+ 				   				$scope.codeSendingError = true;
+ 				   				$scope.codeErrorMessage = data.message;
+ 				   			}else{
+ 				   				$scope.codeSent = true;
+ 				   			}
+ 				   		})	
+ 	}
 
 }]);
 

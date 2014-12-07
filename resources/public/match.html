@@ -1,14 +1,18 @@
+<h2>Et voila'! You've picked Santa...</h2>   
 <div class="match-container">
-	<h2>Here's your Santa match</h2>   
-	<a href="http://community.lithium.com/t5/user/viewprofilepage/user-id/{{match.litho.userId}}">
+	
+	<div>
 		<img ng-src="{{match.litho['url-icon']}}">
-	</a>
-	<h1>{{match.name}} ({{match.email}})</h1>
-	<div ng-if="match.preferences">
-		<p>{{match.name}} likes {{match.preferences}}</p>
+		<a href="http://community.lithium.com/t5/user/viewprofilepage/user-id/{{match.litho.userId}}">
+			Lithium Technologies
+		</a>
+		<h3>{{match.name}} ({{match.email}})</h3>
+		<div ng-if="match.preferences">
+			<p>{{match.name}} likes {{match.preferences}}</p>
+		</div>
+		<div ng-if="!match.preferences">
+			<p>{{match.name}} likes everything!</p>
+		</div>
+		</div>
 	</div>
-	<div ng-if="!match.preferences">
-		<p>{{match.name}} likes everything!</p>
-	</div>
-
 <div>

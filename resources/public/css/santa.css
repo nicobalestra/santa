@@ -59,3 +59,16 @@ h2 {
     /*text stroke*/
     -webkit-text-stroke: 1px #fff473;
 }
+
+.match-container {
+    margin-left: 20%;
+    margin-top: 10%;
+    display:block;
+    -moz-border-radius: 1em 4em 1em 4em;
+    border-radius: 1em 4em 1em 4em;
+    -webkit-box-shadow: 18px 10px 29px 17px rgba(148,102,24,0.87);
+    -moz-box-shadow: 18px 10px 29px 17px rgba(148,102,24,0.87);
+    box-shadow: 18px 10px 29px 17px rgba(148,102,24,0.87);
+    padding:20px;
+    width: 40%;
+}

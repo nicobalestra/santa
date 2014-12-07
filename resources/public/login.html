@@ -1,13 +1,23 @@
+<h2>Welcome to Lithium's Secret Santa picker</h2>
 <div style="width:350px; margin-left: 38%; margin-top: 10%;" ng-controller="Login">
+     <div ng-if="loginFailed" id="helpBlock" class="alert alert-danger"><div>{{loginErrorMessage}}</div></div>
+     <div ng-if="httpError" class="alert alert-danger"><div>Connection error while trying to login: {{errorMessage}}</div></div>
+     <div ng-if="codeSendingError" id="helpBlock" class="alert alert-danger"><div>{{codeErrorMessage}}</div></div>
+
+     <div ng-if="loginNotFound" id="helpBlock" class="alert alert-danger"><div>User not found. Are you sure you entered the form <a href="https://docs.google.com/forms/d/1ngWK3Qb0Dl3K8d2x1iw1qM4aX9T7XE_O7Pgx7Vl5peI/viewform">here</a>?</div></div>
+     <div ng-if="codeSent" class="alert alert-success"><div>Your unique password has been sent to your email</div></div>
  	<form role="form">
 	 <div class="form-group" ng-class="{'has-error': loginFailed}">
 	    <label for="exampleInputEmail1">Email address</label>
 	    <input size="30" ng-model="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Your Lithium email address">
-	     <span ng-if="loginFailed" id="helpBlock" class="help-block has-error">Email not found. Are you sure you submitted the form <a href="https://docs.google.com/forms/d/1ngWK3Qb0Dl3K8d2x1iw1qM4aX9T7XE_O7Pgx7Vl5peI/viewform">here</a>?</span>
-	     <span ng-if="httpError" class="help-block has-error">Connection error while trying to login: {{errorMessage}}</span>
+	  </div>
+	  <div class="form-group" ng-class="{'has-error': loginFailed}">
+	    <label for="password">Password</label>
+	    <input size="30" ng-model="password" type="password" class="form-control" id="password" placeholder="The password I've sent you via email">
 	  </div>
 	  <div class="text-center">
-  		<button ng-click="login()" type="submit" class="btn btn-default">Santa me</button>
+  		<button ng-click="login()" type="submit" class="btn">Santa me</button>
+  		<button ng-click="sendCode()" class="btn">Send me the password</button>
   	  </div>
 	</form>  
 </div>

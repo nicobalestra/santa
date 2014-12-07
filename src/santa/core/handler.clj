@@ -12,10 +12,16 @@
             [clj-http.client :as client]
             [cheshire.core :refer :all]
             [clojure.string :refer [lower-case]]
+            [postal.core :as mail]
             )
   (:import org.bson.types.ObjectId))
 
 (defonce coll "santa")
+
+(defn- parseInt [num]
+	(try
+		(Integer/parseInt num)
+		(catch Exception e -1)))
 
 (defn- get-db []
   (-> (mg/connect)
@@ -24,9 +30,11 @@
 (defn login [params]
   (let [username (get params "username")
   		username (lower-case username)
-        db (get-db)
-        user (mc/find-one-as-map db coll {:email username})
+        password (get params "password")
+  		db (get-db)
+        user (mc/find-one-as-map db coll {$and [{:email username} {:ID (parseInt password)}]})
         ret {:success (not (nil? (:email user))) :id (str (:_id user))}]
+    (println "Query for username " username " and password " password)
     (println "The user " user)
     (resp/response ret)))
 
@@ -119,6 +127,36 @@ Lithium avatar to put on the page (this should never fail or at least should nev
 
         (resp/response match)))
 
+(defn- send-code-to [user]
+	(if (and (not (nil? (:num-codes user))) (> (:num-codes user) 10)) 
+		{:success false :message "Maximum attempt of retrieving your code reached."}
+		(do 
+		  (let [db (get-db)]
+			(mail/send-message {:from "secret.santa@lithium.com"
+	                       :to [(:email user)]
+	                       :subject "Your secret santa picker code"
+	                       :body [
+	                       		{:type "text/html"
+	                       	 	:content (str "Hi " (:name user) "!<br/>Here is your Secret Santa access code: '" (:ID user) "'") }
+	                       	 ]
+	                       })
+
+			(mc/update-by-id db coll (:_id user) {$set {:num-codes (if (nil? (:num-codes user)) 1 (inc (:num-codes user)))}})
+			{:success true}
+			))))
+
+(defn- get-code [params]
+	(let [email (get params "username")
+		  db (get-db)
+		  user (mc/find-one-as-map db coll {:email email})
+		]
+		(println "Send code to " user)
+		(if user
+			(resp/response (send-code-to user))
+			(resp/response {:success false :message (str "User with email " email " not found!")})
+		)))
+
+
 (defroutes app-routes
   (GET "/" [] (resp/content-type 
   					(resp/resource-response "index.html" {:root "public"})
@@ -126,6 +164,7 @@ Lithium avatar to put on the page (this should never fail or at least should nev
   (POST "/login" {params :json-params} (login params))
   (GET "/draw/:id" [id] (draw id))
   (GET "/colleague/:email" [email] (get-person-by-email email))
+  (POST "/getcode" {params :json-params} (get-code params))
   (route/resources "/")
   (route/not-found "Not Found")
  
