@@ -134,14 +134,16 @@ Lithium avatar to put on the page (this should never fail or at least should nev
 		{:success false :message "Maximum attempt of retrieving your code reached."}
 		(do 
 		  (let [db (get-db)]
-			(mail/send-message {:from "Secret Santa Picker <mailer@lithium.com>"
+			(mail/send-message 
+						{:host "nico-balestra.vm.lithium.com"}
+						{:from "Secret Santa Picker <mailer@lithium.com>"
+
 	                       :to [(:email user)]
 	                       :subject "Your secret santa picker code"
 	                       :body [
 	                       		{:type "text/html"
 	                       	 	:content (str "Hi " (:name user) "!<br/>Here is your Secret Santa access code: '" (:ID user) "'") }
-	                       	 ]
-	                       })
+	                        ]})
 
 			(mc/update-by-id db coll (:_id user) {$set {:num-codes (if (nil? (:num-codes user)) 1 (inc (:num-codes user)))}})
 			{:success true}
