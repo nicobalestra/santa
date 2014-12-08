@@ -135,7 +135,6 @@ Lithium avatar to put on the page (this should never fail or at least should nev
 		(do 
 		  (let [db (get-db)]
 			(mail/send-message 
-						{:host "nico-balestra.vm.lithium.com"}
 						{:from "Secret Santa Picker <mailer@lithium.com>"
 
 	                       :to [(:email user)]
