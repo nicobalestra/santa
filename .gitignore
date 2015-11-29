@@ -8,7 +8,7 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
-
+/db
 # Ignore list for Target 3001!, a PCB layout tool
 
 # mutex file
@@ -91,3 +91,4 @@ excellon.txt
 *.wrl
 *.ADPT
 *.AZO
+

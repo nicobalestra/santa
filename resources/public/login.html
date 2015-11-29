@@ -10,14 +10,15 @@
 	 <div class="form-group" ng-class="{'has-error': loginFailed}">
 	    <label for="exampleInputEmail1">Email address</label>
 	    <input size="30" ng-model="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Your Lithium email address">
+	  	<a ng-click="sendPassword()">Send me my password</a>
 	  </div>
+
 	  <div class="form-group" ng-class="{'has-error': loginFailed}">
 	    <label for="password">Password</label>
 	    <input size="30" ng-model="password" type="password" class="form-control" id="password" placeholder="The password I've sent you via email">
 	  </div>
 	  <div class="text-center">
-  		<button ng-click="login()" type="submit" class="btn">Santa me</button>
-  		<!-- button ng-click="sendCode()" class="btn">Send me the password</button -->
+  		<button ng-click="login()" type="submit" class="btn">Pick my Santa</button>
   	  </div>
 	</form>  
 </div>

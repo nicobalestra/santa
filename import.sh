@@ -1,1 +1,1 @@
-mongoimport --db test --collection santa --headerline --type csv --file import.csv
+mongoimport --db santadb --collection santa --headerline --type csv --file import.csv

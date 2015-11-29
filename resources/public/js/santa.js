@@ -83,12 +83,12 @@ santa.controller("Login", ["$scope", "Restangular", "$location", "User", functio
  						});
  	};
 
- 	$scope.sendCode = function(){
+ 	$scope.sendPassword = function(){
  		clearErrors();
 
  		if (!$scope.email || $scope.email == ""){
  			$scope.codeSendingError = true;
- 			$scope.codeErrorMessage = "Please enter an email address";
+ 			$scope.codeErrorMessage = "Please enter your Lithium email address";
  			return;
  		}
 
