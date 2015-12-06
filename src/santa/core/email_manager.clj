@@ -6,8 +6,9 @@
 						  "As you know it's that time of the year..."
 						  "This year you will be the Secret Santa for <b>${match}</b> :) <br/>"
 						  "<br/><img src='${avatarUrl}'><br/>"
-				    	  "Here's some ideas for what you can buy to your wonderful colleague:<br/>"
-    				      "<br/><b>${preferences}</b>"))
+				    	  "Here's some ideas for what would make ${match} happy:<br/>"
+    				      "<br/><b>${preferences}</b><br/>"
+    				      "<br/>Thanks and Happy Christmas <br/><b>Secret Santa Picker</b>"))
 
 (defn fill-var [txt var-name var-value]
 	(println "Fill var with txt=" txt " var-name=" var-name " var-value=" var-value)

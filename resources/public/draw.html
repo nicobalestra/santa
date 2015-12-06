@@ -1,13 +1,12 @@
 <div ng-controller="Draw">
-
-	<div id="container">
-	    <h2>Click on Santa to find your Santa match</h2>
-	</div>
 	<div class="has-error" ng-if="isDrawError">
 	  <p class="lead">There has been an error. Please tell Nico that {{drawError}}</p>
 	</div>
 
-	<div>
-		<div style='margin-left: 40%; margin-top: 15%; cursor:pointer;'><img ng-click="draw()" id="draw-img" width="330px;" src="images/draw.jpg"></div>
+	<div class="text-center">
+		<div style='margin-top: 10%;'><img id="draw-img" width="330px;" src="images/2i7iop.jpg"></div>
 	</div>
+	<div class="text-center" style="margin-top: 5%">
+  		<button ng-click="draw()"  type="submit" class="btn btn-primary">Select a colleague</button>
+  	  </div>
 </div>

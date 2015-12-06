@@ -1,18 +1,30 @@
-<h2>Et voila'! You've picked Santa...</h2>   
-<div class="match-container">
-	
-	<div>
-		<img ng-src="{{match.litho['url-icon']}}">
-		<a href="http://community.lithium.com/t5/user/viewprofilepage/user-id/{{match.litho.userId}}">
-			Lithium Technologies
-		</a>
-		<h3>{{match.name}} ({{match.email}})</h3>
-		<div ng-if="match.preferences">
-			<p>{{match.name}} likes {{match.preferences}}</p>
-		</div>
-		<div ng-if="!match.preferences">
-			<p>{{match.name}} likes everything!</p>
-		</div>
-		</div>
+<h2>Congratulation!!</h2>   
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3 col-sm-6">
+
+            <div class="card hovercard">
+                <div class="cardheader">
+
+                </div>
+                <div class="avatar">
+                    <img ng-src="{{match.litho['url-icon']}}">
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <a target="_blank" href="http://community.lithium.com/t5/user/viewprofilepage/user-id/{{match.litho.userId}}">{{match.name}}</a>
+                    </div>
+                    <div ng-if="match.preferences" class="desc">
+						<p>{{match.name}} likes {{match.preferences}}</p>
+					</div>
+					<div ng-if="!match.preferences" class="desc">
+						<p>{{match.name}} likes anything!</p>
+					</div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+
 	</div>
-<div>
+</div>

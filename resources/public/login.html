@@ -1,24 +1,27 @@
-<h2>Welcome to Lithium's Secret Santa picker</h2>
-<div style="width:350px; margin-left: 38%; margin-top: 10%;" ng-controller="Login">
+<div class="img-left"><img src="images/animated-merry-christmas-greetings.gif"></div>
+<div style="width:400px; margin-left: 38%; margin-top: 5%;" ng-controller="Login">
      <div ng-if="loginFailed" id="helpBlock" class="alert alert-danger"><div>{{loginErrorMessage}}</div></div>
      <div ng-if="httpError" class="alert alert-danger"><div>Connection error while trying to login: {{errorMessage}}</div></div>
      <div ng-if="codeSendingError" id="helpBlock" class="alert alert-danger"><div>{{codeErrorMessage}}</div></div>
 
-     <div ng-if="loginNotFound" id="helpBlock" class="alert alert-danger"><div>User not found. Are you sure you entered the form <a href="https://docs.google.com/forms/d/1ngWK3Qb0Dl3K8d2x1iw1qM4aX9T7XE_O7Pgx7Vl5peI/viewform">here</a>?</div></div>
+     <div ng-if="loginNotFound" id="helpBlock" class="alert alert-danger"><div>User not found. Did you fill in the <a href="http://goo.gl/forms/PTjvZPImJo">Secret Santa form</a>?</div></div>
      <div ng-if="codeSent" class="alert alert-success"><div>Your unique password has been sent to your email</div></div>
  	<form role="form">
 	 <div class="form-group" ng-class="{'has-error': loginFailed}">
 	    <label for="exampleInputEmail1">Email address</label>
 	    <input size="30" ng-model="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Your Lithium email address">
-	  	<a ng-click="sendPassword()">Send me my password</a>
+	  	<a href="" ng-click="sendPassword()">I've no idea what my password is</a>
 	  </div>
 
 	  <div class="form-group" ng-class="{'has-error': loginFailed}">
 	    <label for="password">Password</label>
-	    <input size="30" ng-model="password" type="password" class="form-control" id="password" placeholder="The password I've sent you via email">
+	    <input size="30" ng-model="password" type="password" class="form-control" id="password" placeholder="Click the link above if you don't know your password">
 	  </div>
 	  <div class="text-center">
-  		<button ng-click="login()" type="submit" class="btn">Pick my Santa</button>
+  		<button ng-click="login()" type="submit" class="btn btn-primary">Pick a colleague</button>
+  	  </div>
+  	  <div class="text-center" style="margin-top: 1%;">
+  	  	<p class="bg-danger">A very complex O(n)^n algorithm will select your match</p>
   	  </div>
 	</form>  
 </div>
