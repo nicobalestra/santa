@@ -47,6 +47,6 @@
 	                       :subject "Your secret santa picker code"
 	                       :html (-> send-code-body
 	                       			(fill-var "username" (:name user))
-	                       			(fill-var "password" (:ID user)))})
+	                       			(fill-var "password" (str (:ID user))))})
 			 (db/increase-requested-code user)
 			 {:success true})))
