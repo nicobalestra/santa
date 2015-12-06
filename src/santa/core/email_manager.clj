@@ -14,7 +14,7 @@
     				      "<img src='http://www.myfunnyanimals.com/wp-content/uploads/2008/11/funny-santa-claus.jpg'>"))
 (def send-code-body (str "Hi ${username} "
 	                     "!<br/>Here is your Secret Santa access password: '<b>${password}</b>'<br/>"
-	                     "Please head to the <a href='https://morning-fjord-4043.herokuapp.com'>Secret Santa Picker</a> website " 
+	                     "Please head to the <a href='https://lithium-santa-picker.herokuapp.com'>Secret Santa Picker</a> website " 
 	                     "to select who you are going to make happy this year :)<br/><br/>"
 						 "Thanks and Happy Christmas ho ho ho<br/><br/><b>Secret Santa Picker</b><br/>"
 						 "<img src='http://www.myfunnyanimals.com/wp-content/uploads/2008/11/funny-santa-claus.jpg'>"))
