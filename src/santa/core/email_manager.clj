@@ -11,6 +11,11 @@
 				    	  "Here's some ideas for what would make ${match} happy:<br/>"
     				      "<br/><b>${preferences}</b><br/>"
     				      "<br/>Thanks and Happy Christmas <br/><b>Secret Santa Picker</b>"))
+(def send-code-body (str "Hi " ${username} 
+	                     "!<br/>Here is your Secret Santa access password: '<b>" (:ID user) "</b>'<br/>"
+	                     "Please head to the <a href='https://morning-fjord-4043.herokuapp.com'>Secret Santa Picker</a> website " 
+	                     "to select who you are going to make happy this year :)<br/><br/>"
+						 "Thanks and Happy Christmas ho ho ho<br/><br/><b>Secret Santa Picker</b> ")}))
 
 (def send-message (postmark api-token "nico.balestra@lithium.com"))
 
@@ -40,10 +45,6 @@
 		(do 
 		  (send-message {  :to [(:email user)]
 	                       :subject "Your secret santa picker code"
-	                       :html (str "Hi " (:name user) 
-	                       			  "!<br/>Here is your Secret Santa access password: '<b>" (:ID user) "</b>'<br/>"
-	                       			  "Please head to the <a href='https://morning-fjord-4043.herokuapp.com'>Secret Santa Picker</a> website " 
-	                       			  "to select who you are going to make happy :)<br/><br/>"
-									  "Thanks and Happy Christmas ho ho ho<br/><br/><b>Secret Santa Picker</b> ")})
+	                       :html (fill-var "username" (:name user))
 			 (db/increase-requested-code user)
 			 {:success true})))
