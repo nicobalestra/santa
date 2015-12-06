@@ -3,7 +3,8 @@
 	(:require [monger.core :as mg]
 		      [monger.collection :as mc]
               [monger.operators :refer :all]
-              [monger.query :refer :all])
+              [monger.query :refer :all]
+              [environ.core :refer [env]])
 	(:import org.bson.types.ObjectId))
 
 (defonce coll "santa")
