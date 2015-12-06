@@ -16,7 +16,7 @@
                         <a target="_blank" href="http://community.lithium.com/t5/user/viewprofilepage/user-id/{{match.litho.userId}}">{{match.name}}</a>
                     </div>
                     <div ng-if="match.preferences" class="desc">
-						<p>{{match.name}} likes {{match.preferences}}</p>
+						{{match.name}} likes <div ng-bind-html="match.preferences"></div>
 					</div>
 					<div ng-if="!match.preferences" class="desc">
 						<p>{{match.name}} likes anything!</p>
