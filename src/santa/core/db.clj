@@ -8,7 +8,7 @@
 	(:import org.bson.types.ObjectId))
 
 (defonce coll "santa")
-(def db-uri (env :mongo_uri))))
+(def db-uri (env :mongo_uri))
 
 (defn- parseInt [num]
 	(try
