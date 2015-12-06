@@ -21,5 +21,6 @@
   :hooks [environ.leiningen.hooks]
   :main santa.core.handler
   :profiles  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring-mock "0.1.5"]]}
+                                  [ring-mock "0.1.5"]]
+                    :env {:database-url "mongodb://santadb:lithium@ds033123.mongolab.com:33123/heroku_6zg9nq7x"}}}
               :production {:env {:production true}}})
