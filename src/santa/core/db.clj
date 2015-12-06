@@ -16,7 +16,9 @@
 
 
 (defn get-db []
-	(let [db-uri (env :database-url)
+	(let [;db-uri (env :database-url)
+		  ;This is awful but I cannot manage heroku to see the env variable 
+		  db-uri "mongodb://santadb:lithium@ds033123.mongolab.com:33123/heroku_6zg9nq7x"	
 		  dumb (println "DB URI " db-uri)
 			{:keys [conn db]} (mg/connect-via-uri db-uri)]
 		db))
