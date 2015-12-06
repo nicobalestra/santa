@@ -12,6 +12,7 @@
                  [cheshire "5.3.1"]
                  [com.draines/postal "1.11.3"]
                  [environ "1.0.1"]
+                 [postmark "1.1.0" :exclusions [org.clojure/clojure]]
                  ]
 
   :plugins [[lein-ring "0.8.13"]

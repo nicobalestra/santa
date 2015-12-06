@@ -1,6 +1,8 @@
 (ns santa.core.email-manager
-  (:require [postal.core :as mail]
-  			[santa.core.db :as db]))
+  (:require [santa.core.db :as db])
+  (:use [postmark.core :only (postmark)]))
+(def api-token (get (System/getenv) "POSTMARK_API_TOKEN"))
+
 (def send-match-body (str "<h1>Happy Christmas</h1>"
 						  "<br/>Hello ${username}, it's Secret Santa picker here.<br/>"
 						  "As you know it's that time of the year..."
@@ -10,23 +12,25 @@
     				      "<br/><b>${preferences}</b><br/>"
     				      "<br/>Thanks and Happy Christmas <br/><b>Secret Santa Picker</b>"))
 
+(def send-message (postmark api-token "nico.balestra@lithium.com"))
+
 (defn fill-var [txt var-name var-value]
 	(println "Fill var with txt=" txt " var-name=" var-name " var-value=" var-value)
 	(clojure.string/replace txt (str "${" var-name "}") var-value))
 
 (defn email-match [drawer]
 	(let [match (:match drawer)]
-	 (mail/send-message 
-		{:from "Secret Santa Picker <mailer@lithium.com>"
-         :to [(:email drawer)]
+	 (send-message 
+		{:to [(:email drawer)]
 	     :subject "It's Secret Santa time"
-	     :body [
-	     	{:type "text/html"
-	         :content (-> send-match-body
+	     :html (-> send-match-body
 	         			(fill-var "username" (:name drawer))
 	         			(fill-var "match" (:name match))
 	         			(fill-var "preferences" (:preferences match))
-	         			(fill-var "avatarUrl" (get-in match [:litho :url-icon] "https://gapyear.s3.amazonaws.com/images/made/images/advertiser_files/santa_claus_582_388.jpg")))}]})))
+	         			(fill-var "avatarUrl" 
+	         				(get-in match 
+	         					[:litho :url-icon] 
+	         "https://gapyear.s3.amazonaws.com/images/made/images/advertiser_files/santa_claus_582_388.jpg")))})))
 
 
 
@@ -34,15 +38,8 @@
 	(if (and (not (nil? (:num-codes user))) (> (:num-codes user) 10)) 
 		{:success false :message "Maximum attempt of retrieving your code reached."}
 		(do 
-		  (mail/send-message 
-						{:from "Secret Santa Picker <mailer@lithium.com>"
-
-	                       :to [(:email user)]
+		  (send-message {  :to [(:email user)]
 	                       :subject "Your secret santa picker code"
-	                       :body [
-	                       		{:type "text/html"
-	                       	 	:content (str "Hi " (:name user) "!<br/>Here is your Secret Santa access password: '<b>" (:ID user) "</b>'") }
-	                        ]})
-
+	                       :html (str "Hi " (:name user) "!<br/>Here is your Secret Santa access password: '<b>" (:ID user) "</b>'")})
 			 (db/increase-requested-code user)
 			 {:success true})))
