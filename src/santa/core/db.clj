@@ -8,7 +8,6 @@
 	(:import org.bson.types.ObjectId))
 
 (defonce coll "santa")
-(def db-uri (env :database-url))
 
 (defn- parseInt [num]
 	(try
@@ -17,7 +16,9 @@
 
 
 (defn get-db []
-	(let [{:keys [conn db]} (mg/connect-via-uri db-uri)]
+	(let [db-uri (env :database-url)
+		  dumb (println "DB URI " db-uri)
+			{:keys [conn db]} (mg/connect-via-uri db-uri)]
 		db))
 
 (defn get-user [username password]
