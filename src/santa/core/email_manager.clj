@@ -40,6 +40,9 @@
 		(do 
 		  (send-message {  :to [(:email user)]
 	                       :subject "Your secret santa picker code"
-	                       :html (str "Hi " (:name user) "!<br/>Here is your Secret Santa access password: '<b>" (:ID user) "</b>'")})
+	                       :html (str "Hi " (:name user) 
+	                       			  "!<br/>Here is your Secret Santa access password: '<b>" (:ID user) "</b>'"
+	                       			  "Please head to the <a href='https://morning-fjord-4043.herokuapp.com'>Secret Santa Picker</a> website " 
+	                       			  "to select who you are going to make happy oh oh oh<br/>Thanks and Happy Christmas <br/><br/><b>Secret Santa Picker</b> ")})
 			 (db/increase-requested-code user)
 			 {:success true})))
