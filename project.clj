@@ -11,11 +11,11 @@
                  [clj-http "1.0.1"]
                  [cheshire "5.3.1"]
                  [com.draines/postal "1.11.3"]
-                 [environ "0.5.0"]
+                 [environ "1.0.1"]
                  ]
 
   :plugins [[lein-ring "0.8.13"]
-            [environ/environ.lein "0.2.1"]]
+            [lein-environ "1.0.1"]]
   :ring {:handler santa.core.handler/app}
   :uberjar-name "santa.jar"
   :hooks [environ.leiningen.hooks]
