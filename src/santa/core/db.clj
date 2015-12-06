@@ -7,6 +7,7 @@
 	(:import org.bson.types.ObjectId))
 
 (defonce coll "santa")
+(def db-uri (env :mongo_uri))))
 
 (defn- parseInt [num]
 	(try
@@ -15,8 +16,8 @@
 
 
 (defn get-db []
-  (-> (mg/connect)
-      (mg/get-db "santadb")))
+	(let [{:keys [conn db]} (mg/connect-via-uri db-uri)]]
+		db))
 
 (defn get-user [username password]
 	(mc/find-one-as-map (get-db) coll {$and [{:email username} {:ID (parseInt password)}]}))
