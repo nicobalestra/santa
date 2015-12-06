@@ -17,7 +17,7 @@
 
 
 (defn get-db []
-	(let [{:keys [conn db]} (mg/connect-via-uri db-uri)]]
+	(let [{:keys [conn db]} (mg/connect-via-uri db-uri)]
 		db))
 
 (defn get-user [username password]
